@@ -1,14 +1,23 @@
+* { 
+    background-color: #222;
+}
+
 #header {
     font-size: 30px;
     color: white;
     text-shadow: 2px 2px black;
     text-align: center;
-    margin-bottom: -85px;
+    background-color: #222;
+    padding: 0;
 }
 
 .jumbotron {
-    background-image: url("https://img00.deviantart.net/aae3/i/2012/003/d/1/sad_clown_by_didi_s-d4l5rbk.jpg");
     height: 500px;
-    background-repeat: no-repeat;
+    padding: 0;
+    
 }
 
+.jumbotron img {
+    width: 100%;
+
+}

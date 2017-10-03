@@ -3,11 +3,16 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { DataService } from '../data.service'
 import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component'
+import { fadeInAnimation } from 'animations/fade-in.animation';
+
+
 
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
   styleUrls: ['./student.component.css'],
+   animations: [fadeInAnimation],
+  host: { '[@fadeInAnimation]': '' }
 })
 export class StudentComponent implements OnInit {
 

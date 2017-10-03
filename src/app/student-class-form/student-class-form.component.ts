@@ -5,11 +5,15 @@ import { Location }               from '@angular/common';
 import { NgForm } from '@angular/forms';
 
 import { DataService } from '../data.service'
+import { fadeInAnimation } from 'animations/fade-in.animation';
+
 
 @Component({
   selector: 'app-student-class-form',
   templateUrl: './student-class-form.component.html',
-  styleUrls: ['./student-class-form.component.css']
+  styleUrls: ['./student-class-form.component.css'],
+  animations: [fadeInAnimation],
+  host: { '[@fadeInAnimation]': '' }
 })
 export class StudentClassFormComponent implements OnInit {
 

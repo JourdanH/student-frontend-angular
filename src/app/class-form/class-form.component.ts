@@ -1,15 +1,18 @@
 import 'rxjs/add/operator/switchMap';
-import { Component, OnInit }      from '@angular/core';
+import { Component, OnInit, ViewChild }      from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location }               from '@angular/common';
 import { NgForm } from '@angular/forms';
 
 import { DataService } from '../data.service'
+import { fadeInAnimation } from 'animations/fade-in.animation';
 
 @Component({
   selector: 'app-class-form',
   templateUrl: './class-form.component.html',
-  styleUrls: ['./class-form.component.css']
+  styleUrls: ['./class-form.component.css'],
+  animations: [fadeInAnimation],
+  host: { '[@fadeInAnimation]': '' }
 })
 export class ClassFormComponent implements OnInit {
 
@@ -17,6 +20,9 @@ export class ClassFormComponent implements OnInit {
   errorMessage: string;
   instructors;
   classFormData: object;
+
+  class_xForm: NgForm;
+  @ViewChild('class_xForm') currentForm: NgForm;
 
   getRecordForEdit(){
     this.route.params
@@ -61,5 +67,53 @@ export class ClassFormComponent implements OnInit {
     }
 
   }
+
+ngAfterViewChecked() {
+    this.formChanged();
+  }
+
+  formChanged() {
+    this.class_xForm = this.currentForm;
+    this.class_xForm.valueChanges
+      .subscribe(
+        data => this.onValueChanged(data)
+      );
+  }
+
+  onValueChanged(data?: any) {
+    let form = this.class_xForm.form;
+
+    for (let field in this.formErrors) {
+      // clear previous error message (if any)
+      this.formErrors[field] = '';
+      const control = form.get(field);
+
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
+    }
+  }
+
+  formErrors = {
+    'subject': '',
+    'course': ''
+    
+  };
+
+  validationMessages = {
+    'subject': {
+      'required': "Subject field is required",
+      'minlength': "Subject must at least two characters",
+      'maxlength' : "Subject field cannot be over 30 characters"
+      
+    },
+    'course': {
+      'pattern': 'Must be a 3-digit number'
+    }
+    
+  };
 
 }
